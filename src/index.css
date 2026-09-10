@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: light --default;
+}
+
+:root {
+  font-family: Arial, sans-serif;
+  color: #233730;
+  background-color: #f6f8f7;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid #484fc1;
+  outline-offset: 3px;
+}
+/* Smooth feedback without moving the layout */
+.nav-link,
+.board-tab,
+.post-card,
+.post-card a {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+/* Mouse hover */
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover,
+  .board-tab:hover {
+    background-color: #dce8df;
+    color: #233730;
+    box-shadow: inset 0 0 0 1px #a6bcad;
+  }
+
+  .nav-link[aria-current="page"]:hover,
+  .board-tab[aria-pressed="true"]:hover {
+    background-color: #3b6250;
+    color: #ffffff;
+  }
+
+  .post-card:hover {
+    background-color: #fbfdfb;
+    border-color: #6d947e;
+    box-shadow: 0 6px 18px rgb(35 55 48 / 12%);
+  }
+
+  .post-card a:hover {
+    color: #147765;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+/* Keyboard focus */
+.nav-link:focus-visible,
+.board-tab:focus-visible,
+.post-card a:focus-visible {
+  outline: 3px solid #484fc1;
+  outline-offset: 3px;
+}
+
+.post-card:focus-within {
+  border-color: #484fc1;
+  box-shadow: 0 0 0 2px rgb(72 79 193 / 15%);
+}
+
+/* Touch or mouse press: kept after hover to take priority */
+.nav-link:active,
+.board-tab:active {
+  background-color: #1c3329;
+  color: #ffffff;
+  box-shadow: inset 0 0 0 2px #658874;
+}
+
+.post-card a:active {
+  background-color: #dce8df;
+  color: #233730;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link,
+  .board-tab,
+  .post-card,
+  .post-card a {
+    transition: none;
+  }
+}
+.danger-button {
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .danger-button:not(:disabled):hover {
+    background-color: #fee2e2;
+    border-color: #b91c1c;
+  }
+
+  .danger-solid:not(:disabled):hover {
+    background-color: #991b1b;
+  }
+}
+
+.danger-button:not(:disabled):active {
+  background-color: #fecaca;
+}
+
+.danger-solid:not(:disabled):active {
+  background-color: #7f1d1d;
+}
+
+.danger-button:focus-visible {
+  outline: 3px solid #484fc1;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .danger-button {
+    transition: none;
+  }
+}
+/* Disabled controls should not appear interactive. */
+.nav-link:disabled,
+.board-tab:disabled {
+  pointer-events: none;
+}
