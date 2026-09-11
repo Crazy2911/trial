@@ -1,3 +1,4 @@
+import StatusSummary from './StatusSummary'
 import { useState, useEffect } from 'react'
 import PostCard from './PostCard'
 
@@ -155,6 +156,7 @@ useEffect(() => {
       <p className="mt-2 leading-relaxed text-[#596B62]">
         Report what needs fixing. Share what you no longer need.
       </p>
+      <StatusSummary posts={posts} />
       {storageError && (
       <div
         role="status"
