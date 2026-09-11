@@ -1,3 +1,4 @@
+import ImagePicker from './ImagePicker'
 import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -17,6 +18,8 @@ const emptyForm = {
   description: '',
   location: '',
   category: 'Electrical',
+  imageUrl: '',
+  imagePath: '',
 }
 
 function readDraft() {
@@ -46,6 +49,10 @@ function readDraft() {
       category: categories[type].includes(saved.category)
         ? saved.category
         : categories[type][0],
+        imageUrl:
+  typeof saved.imageUrl === 'string' ? saved.imageUrl : '',
+imagePath:
+  typeof saved.imagePath === 'string' ? saved.imagePath : '',
     }
   } catch {
     return { ...emptyForm }
@@ -60,6 +67,20 @@ function CreatePost({ onCreated }) {
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState('')
   const [storageError, setStorageError] = useState('')
+  const [imageUploading, setImageUploading] = useState(false)
+const imageBusyRef = useRef(false)
+
+function handleImageBusy(busy) {
+  imageBusyRef.current = busy
+  setImageUploading(busy)
+}
+
+function handleImageChange(image) {
+  setForm((current) => ({
+    ...current,
+    ...image,
+  }))
+}
 
   // Immediate guard against two submissions starting together.
   const submitting = useRef(false)
@@ -102,7 +123,7 @@ function CreatePost({ onCreated }) {
   async function handleSubmit(event) {
     event.preventDefault()
 
-    if (submitting.current) return
+    if (submitting.current || imageBusyRef.current) return
 
     const cleanedForm = {
       ...form,
@@ -354,10 +375,16 @@ function CreatePost({ onCreated }) {
               {errors.category}
             </p>
           </div>
+          <ImagePicker
+  imageUrl={form.imageUrl}
+  onImageChange={handleImageChange}
+  onBusyChange={handleImageBusy}
+  disabled={saving}
+/>
 
           <button
             type="submit"
-            disabled={saving}
+            disabled={saving || imageUploading}
             className="nav-link flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-[#263F38] px-4 py-3 font-semibold text-white disabled:cursor-wait disabled:opacity-60"
           >
             {saving && (
@@ -366,7 +393,11 @@ function CreatePost({ onCreated }) {
                 className="loading loading-spinner loading-sm"
               />
             )}
-            {saving ? 'Saving post…' : 'Publish post'}
+            {imageUploading
+  ? 'Wait for photo upload…'
+  : saving
+    ? 'Saving post…'
+    : 'Publish post'}
           </button>
         </fieldset>
 

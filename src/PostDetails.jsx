@@ -1,3 +1,4 @@
+import PostImage from './PostImage'
 import EditPost from './EditPost'
 import StatusEditor from './StatusEditor'
 import { useState, useRef } from 'react'
@@ -115,6 +116,10 @@ function PostDetails({ posts, onDeleted,onUpdated }) {
         <h1 className="mt-4 text-2xl font-bold break-words">
           {post.title}
         </h1>
+        <PostImage
+  src={post.imageUrl}
+  alt={`Attached photo: ${post.title}`}
+/>
 
         <p className="mt-4 whitespace-pre-wrap leading-relaxed break-words text-[#596B62]">
           {post.description}

@@ -1,3 +1,4 @@
+import PostImage from './PostImage'
 import { Link } from 'react-router-dom'
 
 function PostCard({ post }) {
@@ -24,6 +25,10 @@ function PostCard({ post }) {
       <h2 className="mt-4 text-lg font-bold leading-snug break-words">
         {post.title}
       </h2>
+      <PostImage
+  src={post.imageUrl}
+  alt={`Attached photo: ${post.title}`}
+/>
 
       <p className="mt-2 text-sm leading-relaxed break-words text-[#596B62]">
         {post.description}
